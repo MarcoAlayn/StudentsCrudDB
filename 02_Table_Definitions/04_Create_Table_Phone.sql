@@ -6,8 +6,8 @@ CREATE TABLE phone
     phone_type VARCHAR(30) NOT NULL CHECK(phone_type IN ('Personal','Trabajo','Casa')),
     country_code NVARCHAR(5) NOT NULL,
     area_code VARCHAR(5) NOT NULL,
-    created_on DATETIME2 NOT NULL DEFAULT GETDATE(),
-    updated_on DATETIME2 NOT NULL,
+    created_on DATETIME2 DEFAULT GETDATE(),
+    updated_on DATETIME2,
     FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 

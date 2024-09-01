@@ -5,8 +5,10 @@ CREATE TABLE student
     middle_name NVARCHAR(45) NOT NULL,
     first_name NVARCHAR(45) NOT NULL,
     gender CHAR(1) NOT NULL CHECK( gender IN ('M','F')) ,
-    created_on DATETIME2 NOT NULL DEFAULT GETDATE(),
-    updated_on DATETIME2 NOT NULL,
+    created_on DATETIME2 DEFAULT GETDATE(),
+    updated_on DATETIME2,
 );
 
 CREATE INDEX student_last_name_idx ON student(last_name)
+
+
