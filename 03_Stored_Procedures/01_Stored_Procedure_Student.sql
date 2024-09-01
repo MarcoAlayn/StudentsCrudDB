@@ -88,6 +88,22 @@ BEGIN
             RETURN
         END
 
+        IF EXISTS (SELECT 1
+        FROM student
+        WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name)
+        BEGIN
+            RAISERROR('Ya existe un estudiante con ese nombre', 16, 1)
+            RETURN
+        END
+
+        IF EXISTS (SELECT 1
+        FROM email
+        WHERE @email = email)
+        BEGIN
+            RAISERROR('El email ya existe',16,1)
+            RETURN
+        END
+
         IF @email NOT LIKE '%_@_%._%'
         BEGIN
             RAISERROR('El formato de email no es valido',16,1)
@@ -148,6 +164,22 @@ BEGIN
         WHERE student_id = @student_id)
         BEGIN
             RAISERROR('El estudiante no existe',16,1)
+            RETURN
+        END
+
+        IF EXISTS (SELECT 1
+        FROM student
+        WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name)
+        BEGIN
+            RAISERROR('Ya existe un estudiante con ese nombre', 16, 1)
+            RETURN
+        END
+
+        IF EXISTS (SELECT 1
+        FROM email
+        WHERE @email = email)
+        BEGIN
+            RAISERROR('El email ya existe',16,1)
             RETURN
         END
 
