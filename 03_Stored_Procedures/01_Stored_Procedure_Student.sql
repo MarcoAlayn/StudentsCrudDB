@@ -204,7 +204,8 @@ BEGIN
             SET first_name = ISNULL(@first_name,first_name),
             middle_name = ISNULL(@middle_name, middle_name),
             last_name = ISNULL(@last_name,last_name),
-            gender = ISNULL(@gender,gender)
+            gender = ISNULL(@gender,gender),
+            updated_on = GETDATE()
             WHERE student_id = @student_id
 
         --update address table
@@ -223,7 +224,8 @@ BEGIN
         BEGIN
             UPDATE email
             SET email = ISNULL(@email,email),
-                email_type = ISNULL(@email_type,email_type)
+                email_type = ISNULL(@email_type,email_type),
+                updated_on = GETDATE()
                         WHERE student_id = @student_id
         END
 
@@ -234,7 +236,8 @@ BEGIN
                 SET phone = ISNULL(@phone,phone),
                 phone_type =ISNULL(@phone_type,phone_type),
                 country_code = ISNULL(@country_code,country_code),
-                area_code = ISNULL(@area_code,area_code)
+                area_code = ISNULL(@area_code,area_code),
+                updated_on = GETDATE()
                 WHERE student_id = @student_id
 
         END
