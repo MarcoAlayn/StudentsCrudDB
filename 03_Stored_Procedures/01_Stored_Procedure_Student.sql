@@ -94,6 +94,16 @@ BEGIN
             RETURN
         END
 
+        IF @email_type NOT IN ('Personal','Escolar', 'Trabajo')
+        BEGIN
+            RAISERROR('El valor de tipo de email debe ser "Personal","Escolar" o "Trabajo".',16,1)
+        END
+
+        IF @phone_type NOT IN ('Personal','Trabajo','Casa')
+        BEGIN
+            RAISERROR('El valor de tipo de numero debe ser "Personal","Trabajo" o "Casa".',16,1)
+        END
+
         --insert student
         INSERT INTO student
             (first_name, middle_name, last_name, gender)
@@ -145,6 +155,16 @@ BEGIN
         BEGIN
             RAISERROR('El formato de email no es valido',16,1)
             RETURN
+        END
+
+        IF @email_type NOT IN ('Personal','Escolar', 'Trabajo')
+        BEGIN
+            RAISERROR('El valor de tipo de email debe ser "Personal","Escolar" o "Trabajo".',16,1)
+        END
+
+        IF @phone_type NOT IN ('Personal','Trabajo','Casa')
+        BEGIN
+            RAISERROR('El valor de tipo de numero debe ser "Personal","Trabajo" o "Casa".',16,1)
         END
 
         --update student table
