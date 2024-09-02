@@ -28,18 +28,44 @@ BEGIN
         BEGIN TRANSACTION
 
         --get all students
-        IF @opt = 1
-        BEGIN
+        -- Get all students
+IF @opt = 1
+BEGIN
         SELECT
-            s.student_id, s.first_name, s.middle_name, s.last_name, s.gender,
-            a.address_line, a.city, a.zip_postcode, a.state,
-            e.email, e.email_type,
-            p.phone, p.phone_type, p.country_code, p.area_code
+            s.student_id AS StudentId,
+            s.first_name AS FirstName,
+            s.middle_name AS MiddleName,
+            s.last_name AS LastName,
+            s.gender AS Gender,
+            s.created_on AS StudentCreatedOn,
+            s.updated_on AS StudentUpdatedOn,
+
+            a.student_id AS AddressStudentId,
+            a.address_line AS AddressLine,
+            a.city AS City,
+            a.zip_postcode AS ZipPostcode,
+            a.state AS State,
+
+            e.student_id AS EmailStudentId,
+            e.email AS Email,
+            e.email_type AS EmailType,
+            e.created_on AS EmailCreatedOn,
+            e.updated_on AS EmailUpdatedOn,
+
+            p.student_id AS PhoneStudentId,
+            p.phone AS Phone,
+            p.phone_type AS PhoneType,
+            p.country_code AS CountryCode,
+            p.area_code AS AreaCode,
+            p.created_on AS PhoneCreatedOn,
+            p.updated_on AS PhoneUpdatedOn
+            
         FROM student s
             LEFT JOIN address a ON s.student_id = a.student_id
             LEFT JOIN email e ON s.student_id = e.student_id
             LEFT JOIN phone p ON s.student_id = p.student_id
     END
+
 
         --get student by id
 
@@ -63,10 +89,34 @@ BEGIN
 
         --retreive information
         SELECT
-            s.student_id, s.first_name, s.middle_name, s.last_name, s.gender,
-            a.address_line, a.city, a.zip_postcode, a.state,
-            e.email, e.email_type,
-            p.phone, p.phone_type, p.country_code, p.area_code
+            s.student_id AS StudentId,
+            s.first_name AS FirstName,
+            s.middle_name AS MiddleName,
+            s.last_name LastName,
+            s.gender AS Gender,
+            s.created_on AS StudentCreatedOn,
+            s.updated_on AS StudentUpdatedOn,
+
+            a.student_id AS AddressStudentId,
+            a.address_line AS AddressLine,
+            a.city AS City,
+            a.zip_postcode AS ZipPostcode,
+            a.state AS State,
+
+            e.student_id AS EmailStudentId,
+            e.email AS Email,
+            e.email_type AS EmailType,
+            e.created_on AS EmailCreatedOn,
+            e.updated_on AS EmailUpdatedOn,
+
+            p.student_id AS  PhoneStudentId,
+            p.phone AS Phone,
+            p.phone_type AS PhoneType,
+            p.country_code AS CountryCode,
+            p.area_code AS AreaCode,
+            p.created_on AS PhoneCreatedOn,
+            p.updated_on AS PhoneUpdatedOn
+
         FROM student s
             LEFT JOIN address a ON s.student_id = a.student_id
             LEFT JOIN email e ON s.student_id = e.student_id
@@ -100,7 +150,7 @@ BEGIN
         FROM email
         WHERE @email = email)
         BEGIN
-            RAISERROR('El email ya existe',16,1)
+            RAISERROR('El correo electrónico ya existe para otro estudiante',16,1)
             RETURN
         END
 
@@ -110,14 +160,22 @@ BEGIN
             RETURN
         END
 
+        IF @gender NOT IN ('M','F')
+        BEGIN
+            RAISERROR('El valor de genero solo puede ser "M" o "F"',16,1)
+            RETURN
+        END
+
         IF @email_type NOT IN ('Personal','Escolar', 'Trabajo')
         BEGIN
             RAISERROR('El valor de tipo de email debe ser "Personal","Escolar" o "Trabajo".',16,1)
+            RETURN
         END
 
         IF @phone_type NOT IN ('Personal','Trabajo','Casa')
         BEGIN
             RAISERROR('El valor de tipo de numero debe ser "Personal","Trabajo" o "Casa".',16,1)
+            RETURN
         END
 
         --insert student
@@ -179,7 +237,7 @@ BEGIN
         FROM email
         WHERE @email = email)
         BEGIN
-            RAISERROR('El email ya existe',16,1)
+            RAISERROR('El correo electrónico ya existe para otro estudiante',16,1)
             RETURN
         END
 
@@ -189,14 +247,22 @@ BEGIN
             RETURN
         END
 
+        IF @gender NOT IN ('M','F')
+        BEGIN
+            RAISERROR('El valor de genero solo puede ser "M" o "F"',16,1)
+            RETURN
+        END
+
         IF @email_type NOT IN ('Personal','Escolar', 'Trabajo')
         BEGIN
             RAISERROR('El valor de tipo de email debe ser "Personal","Escolar" o "Trabajo".',16,1)
+            RETURN
         END
 
         IF @phone_type NOT IN ('Personal','Trabajo','Casa')
         BEGIN
             RAISERROR('El valor de tipo de numero debe ser "Personal","Trabajo" o "Casa".',16,1)
+            RETURN
         END
 
         --update student table
