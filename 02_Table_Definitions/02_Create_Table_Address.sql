@@ -2,7 +2,7 @@ CREATE TABLE address
 (
     address_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     student_id INT NOT NULL,
-    Address_line NVARCHAR(100) NOT NULL,
+    address_line NVARCHAR(100) NOT NULL,
     city NVARCHAR(45) NOT NULL,
     zip_postcode NVARCHAR(45) NOT NULL,
     state NVARCHAR(45) NOT NULL,
