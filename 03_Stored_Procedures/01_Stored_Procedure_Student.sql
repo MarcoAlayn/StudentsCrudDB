@@ -59,7 +59,7 @@ BEGIN
             p.area_code AS AreaCode,
             p.created_on AS PhoneCreatedOn,
             p.updated_on AS PhoneUpdatedOn
-            
+
         FROM student s
             LEFT JOIN address a ON s.student_id = a.student_id
             LEFT JOIN email e ON s.student_id = e.student_id
@@ -148,9 +148,17 @@ BEGIN
 
         IF EXISTS (SELECT 1
         FROM email
-        WHERE @email = email)
+        WHERE email = @email)
         BEGIN
             RAISERROR('El correo electrónico ya existe para otro estudiante',16,1)
+            RETURN
+        END
+
+         IF EXISTS (SELECT 1
+            FROM phone
+            WHERE phone = @phone) AND student_id <> @student_id
+        BEGIN
+            RAISERROR('El número teléfonico ya existe para otro estudiante',16,1)
             RETURN
         END
 
@@ -226,18 +234,28 @@ BEGIN
         END
 
         IF EXISTS (SELECT 1
-        FROM student
-        WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name)
+            FROM student
+            WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name)
+            AND student_id <> @student_id
         BEGIN
             RAISERROR('Ya existe un estudiante con ese nombre', 16, 1)
             RETURN
         END
 
         IF EXISTS (SELECT 1
-        FROM email
-        WHERE @email = email)
+            FROM email
+            WHERE email = @email)
+            AND student_id <> @student_id
         BEGIN
             RAISERROR('El correo electrónico ya existe para otro estudiante',16,1)
+            RETURN
+        END
+
+        IF EXISTS (SELECT 1
+            FROM phone
+            WHERE phone = @phone) AND student_id <> @student_id
+        BEGIN
+            RAISERROR('El número teléfonico ya existe para otro estudiante',16,1)
             RETURN
         END
 
