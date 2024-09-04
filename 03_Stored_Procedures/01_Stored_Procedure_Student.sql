@@ -154,9 +154,9 @@ BEGIN
             RETURN
         END
 
-         IF EXISTS (SELECT 1
-            FROM phone
-            WHERE phone = @phone) AND student_id <> @student_id
+        IF EXISTS (SELECT 1
+        FROM phone
+        WHERE phone = @phone)
         BEGIN
             RAISERROR('El número teléfonico ya existe para otro estudiante',16,1)
             RETURN
@@ -235,8 +235,8 @@ BEGIN
 
         IF EXISTS (SELECT 1
             FROM student
-            WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name)
-            AND student_id <> @student_id
+            WHERE first_name = @first_name AND middle_name = @middle_name AND last_name = @last_name
+            AND student_id <> @student_id)
         BEGIN
             RAISERROR('Ya existe un estudiante con ese nombre', 16, 1)
             RETURN
@@ -244,8 +244,8 @@ BEGIN
 
         IF EXISTS (SELECT 1
             FROM email
-            WHERE email = @email)
-            AND student_id <> @student_id
+            WHERE email = @email
+            AND student_id <> @student_id)
         BEGIN
             RAISERROR('El correo electrónico ya existe para otro estudiante',16,1)
             RETURN
@@ -253,7 +253,7 @@ BEGIN
 
         IF EXISTS (SELECT 1
             FROM phone
-            WHERE phone = @phone) AND student_id <> @student_id
+            WHERE phone = @phone AND student_id <> @student_id)
         BEGIN
             RAISERROR('El número teléfonico ya existe para otro estudiante',16,1)
             RETURN
